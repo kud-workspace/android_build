@@ -5035,13 +5035,13 @@ $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) $(OTA_FROM_TARGET_
 
 TARGET_PACKAGE := $(PRODUCT_OUT)/$(DOT_VERSION).zip
 
-MD5 := prebuilts/build-tools/path/$(HOST_OS)-x86/md5sum
+SHA256 := prebuilts/build-tools/path/$(HOST_OS)-x86/sha256sum
 
 .PHONY: otapackage bacon
 otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
 bacon: otapackage
 	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(TARGET_PACKAGE)
-	$(hide) $(MD5) $(TARGET_PACKAGE) > $(TARGET_PACKAGE).md5sum
+	$(hide) $(SHA256) $(TARGET_PACKAGE) > $(TARGET_PACKAGE).sha256
 	echo -e ${CL_RED}"✄▒█▀▀▄ ▒█▀▀▀█ ▀▀█▀▀ 　 ▒█▀▀▀█ ▒█▀▀▀█ "${CL_RED}
 	echo -e ${CL_CYN}"✄▒█░▒█ ▒█░░▒█ ░▒█░░ 　 ▒█░░▒█ ░▀▀▀▄▄ "${CL_RST}
 	echo -e ${CL_RED}"✄▒█▄▄▀ ▒█▄▄▄█ ░▒█░░ 　 ▒█▄▄▄█ ▒█▄▄▄█ "${CL_RED}
@@ -5051,7 +5051,7 @@ bacon: otapackage
 	@echo -e ${CL_YLW} " Grab Some Cookies and Flash!!" ${CL_YLW}
 	@echo -e ${CL_BLD}${CL_RED}"===============================-Package complete-==============================="${CL_RED}
 	@echo -e ${CL_BLD}${CL_YLW}"Zip: "${CL_YLW} $(TARGET_PACKAGE)${CL_RST}
-	@echo -e ${CL_BLD}${CL_YLW}"MD5: "${CL_YLW}" `cat $(TARGET_PACKAGE).md5sum | awk '{print $$1}' `"${CL_RST}
+	@echo -e ${CL_BLD}${CL_YLW}"SHA256: "${CL_YLW}" `cat $(TARGET_PACKAGE).sha256 | awk '{print $$1}' `"${CL_RST}
 	@echo -e ${CL_BLD}${CL_YLW}"Size:"${CL_YLW}" `du -sh $(TARGET_PACKAGE) | awk '{print $$1}' `"${CL_RST}
 	@echo -e ${CL_BLD}${CL_YLW}"Integer Value:"${CL_YLW}" `wc -c $(TARGET_PACKAGE) | awk '{print $$1}' `"${CL_RST}
 	@echo -e ${CL_BLD}${CL_YLW}"TimeStamp:"${CL_YLW}" `cat $(PRODUCT_OUT)/system/build.prop | grep ro.build.date.utc | cut -d'=' -f2 | awk '{print $$1}' `"${CL_RST}
