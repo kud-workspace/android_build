@@ -1262,7 +1262,7 @@ DEFAULT_DATA_OUT_MODULES := ltp $(ltp_packages) $(kselftest_modules)
 
 # We modify several neverallows, so let the build proceed
 ifneq ($(TARGET_BUILD_VARIANT),user)
-SELINUX_IGNORE_NEVERALLOWS := true
+SELINUX_IGNORE_NEVERALLOWS ?= true
 endif
 
 include $(BUILD_SYSTEM)/dumpvar.mk
